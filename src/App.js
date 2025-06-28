@@ -67,40 +67,46 @@ const App = () => {
           </div>
 
           <p className="message">
-            Step {currentStep}: {messages[currentStep + 1 - 1]}
+            <StepMessage currentStep={currentStep}>
+              {messages[currentStep - 1]}
+            </StepMessage>
           </p>
 
           <div className="buttons">
-            <button
-              class={
-                currentStep === 4
-                  ? "success"
-                  : currentStep === 0
-                  ? "inactive"
-                  : ""
-              }
-              onClick={handlePrevious}
-            >
+            <Button currentStep={currentStep} onClick={handlePrevious}>
               Previous
-            </button>
-            <button
-              class={
-                currentStep === 4
-                  ? "success"
-                  : currentStep === 0
-                  ? "inactive"
-                  : ""
-              }
-              onClick={handleNext}
-            >
+            </Button>
+            <Button currentStep={currentStep} onClick={handleNext}>
               Next
-            </button>
+            </Button>
           </div>
         </div>
       ) : (
         <p className="message">{`Shhhh! This is a secret! 🤫`}</p>
       )}
     </div>
+  );
+};
+
+const Button = ({ currentStep, onClick, children }) => {
+  return (
+    <button
+      className={
+        currentStep === 4 ? "success" : currentStep === 0 ? "inactive" : ""
+      }
+      onClick={onClick}
+    >
+      <span>{children}</span>
+    </button>
+  );
+};
+
+const StepMessage = ({ currentStep, children }) => {
+  return (
+    <>
+      <p>Step {currentStep}:</p>
+      {children}
+    </>
   );
 };
 export default App;
